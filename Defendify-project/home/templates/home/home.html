@@ -5,9 +5,20 @@
     </head>
 
     <body>
-      <nav class = 'navbar navbar-dark bg-dark'>
-        <div class="ms-auto">
-          <a href="{% url 'checkSanction' %}" class = "btn btn-outline-light me-1">Check sanctioned wallets</a>
+      <nav class = 'navbar navbar-dark '>
+        <div class="ms-5">
+
+
+
+          <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Submit</button>
+          </form>
+
+
+
+
         </div>
 
       </nav>

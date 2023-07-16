@@ -1,5 +1,4 @@
 from django import forms
 
-
-class sanctionForm(forms.Form):
-    address = forms.CharField(label="Address",max_length=100)
+class addressForm(forms.Form):
+    address = forms.CharField(label="Address" , max_length=100)
