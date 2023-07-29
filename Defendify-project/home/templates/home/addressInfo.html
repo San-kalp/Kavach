@@ -88,10 +88,29 @@
         </div>
     </div>
 
+    <div class="text-center">
+        <ul id="monitor-section">
+            <!-- Use a specific ID for the iframe (e.g., "blockcypherWidget") -->
+            <iframe id="blockcypherWidget" src="" style="overflow:hidden;" frameborder="0"></iframe>
+        </ul>
+    </div>
+
+
     <!-- Add the Bootstrap JS and jQuery links for additional functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    
+
+    <script>
+        // Get the iframe element by its ID
+        const iframe = document.getElementById('blockcypherWidget');
+
+        // Replace the {ADDRESS} placeholder in the src with the actual Bitcoin address
+        const bitcoinAddress = '{{response.0}}'; // Replace this with the actual Bitcoin address from the response variable
+        const iframeSrc = `https://live.blockcypher.com/widget/btc/${bitcoinAddress}/balance/`;
+        iframe.src = iframeSrc;
+    </script>
 
 </body>
 </html>

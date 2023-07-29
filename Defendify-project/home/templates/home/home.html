@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<di>
+<html>
+
 <head>
     <title>Kavach</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -8,42 +9,41 @@
         .container {
             height: 100vh;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             padding: 0 20px;
         }
 
-        /* Custom CSS for the search input */
-        .form-control-lg {
-            border-radius: 50px;
-            font-size: 18px;
-            padding: 15px 25px;
-            border: 2px solid #d6d6d6;
-            box-shadow: none;
-            transition: border-color 0.3s ease-in-out;
-            width: 400px;
+        /* Other CSS styles */
+
+        /* Custom CSS for search button placement */
+        .search-button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px; /* Add margin for spacing */
         }
 
-        .form-control-lg:focus {
-            outline: none;
-            border-color: #74c0fc;
-            box-shadow: 0 0 5px #74c0fc;
+        /* Custom CSS for center aligning the search field */
+        .search-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Custom CSS for the search button */
-        .btn-primary {
-        border-radius: 50px;
-       font-size: 14px; /* Reduced font size from 18px to 14px */
-       padding: 8px 15px; /* Reduced padding from 12px 25px to 8px 15px */
-      }
+        .search-form input[type="text"] {
+            margin-right: 10px;
+        }
 
+    
 
-        /* Custom CSS for the project name animation */
+        /* Custom CSS for the animation */
         #projectName {
-            font-size: 40px;
-            font-weight: bold;
+            font-size: 48px;
+            font-weight: bold; /* Increased font weight for more boldness */
             opacity: 0;
-            animation: fadeIn 1s forwards;
+            animation: fadeIn 2s forwards; /* Slowed down the animation to 2 seconds */
         }
 
         @keyframes fadeIn {
@@ -55,80 +55,70 @@
             }
         }
 
-        /* Custom CSS for the form elements */
-        .input-group {
-            display: flex;
-            align-items: center;
-        }
-
-        .input-group .form-control-lg {
-            margin-right: 10px; /* Added margin for spacing */
-        }
-
-        /* Custom CSS for the Django form */
-        .django-form {
-            width: 400px;
-            margin: 0 auto;
-        }
-
-        .django-form label {
-            font-size: 18px;
-            font-weight: bold;
-            color: #1a237e;
-            margin-bottom: 5px;
-        }
-
-        .django-form input.form-control-lg {
-            font-size: 18px;
-            background-color: #f5f5f5;
-            border: 2px solid #d6d6d6;
-            border-radius: 50px;
-            padding: 20px 25px; /* Increased padding */
-            transition: border-color 0.3s ease-in-out;
-            width: 100%;
-        }
-
-        .django-form input.form-control-lg:focus {
-            background-color: #fff;
-            border-color: #74c0fc;
-            box-shadow: 0 0 5px #74c0fc;
-        }
-
-        /* Custom CSS to remove the "This field is required." text */
-        .django-form .errorlist {
-            display: none;
-        }
-
-        /* Custom CSS for search button placement */
-        .search-button-container {
-            display: flex;
-            align-items: center;
+        .form-control {
+            width: 200px; /* Increased width to make the input field longer */
         }
 
     </style>
 </head>
 
-<div>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+            <!-- Navbar brand or logo -->
+            <a class="navbar-brand" href="#">Logo</a>
+
+            <!-- Toggle button for responsive navigation -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="monitorDropdown" role="button" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Monitor</a>
+                        <div class="dropdown-menu" aria-labelledby="monitorDropdown">
+                            <a class="dropdown-item" href="#">Bitcoin</a>
+                            <a class="dropdown-item" href="#">Litecoin</a>
+                            <a class="dropdown-item" href="#">Ethereum</a>
+                        </div>
+                    </li> -->
+                    <!-- Add more navbar items as needed -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
     <div class="container">
-        <div id="projectName">Defendify</div>
+        <div id="projectName">Defendify.</div>
         <div class="input-group search-button-container">
-          <form method="post">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-8">
-                    <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
-                    <div class="form-group">
-                        <!-- Add the 'form-control' class to the input field for Bootstrap styling -->
-                        <input type="text" name="{{ form.form_data.name }}" placeholder="Search" maxlength="{{ form.form_data.field.max_length }}" class="form-control">
+            <form method="post" class="search-form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
+                        <div class="form-group">
+                            <!-- Add the 'form-control' class to the input field for Bootstrap styling -->
+                            <input type="text" name="{{ form.form_data.name }}" placeholder="Address, Transaction Id" maxlength="{{ form.form_data.field.max_length }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Add the 'btn' and 'btn-primary' classes for Bootstrap styling of the button -->
+                        <button type="submit" class="btn btn-primary btn-block">Go</button>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <!-- Add the 'btn' and 'btn-primary' classes for Bootstrap styling of the button -->
-                    <button type="submit" class="btn btn-primary btn-block">Search</button>
-                </div>
-            </div>
-          </form>
-
+            </form>
         </div>
     </div>
 
@@ -139,18 +129,19 @@
 
     <script>
         // JavaScript to handle the letter-by-letter animation
-        $(document).ready(function() {
+        $(document).ready(function () {
             var projectTitle = $("#projectName").text();
             $("#projectName").empty();
             var i = 0;
-            var interval = setInterval(function() {
+            var interval = setInterval(function () {
                 $("#projectName").append(projectTitle.charAt(i));
                 i++;
                 if (i > projectTitle.length) {
                     clearInterval(interval);
                 }
-            }, 100);
+            }, 150); /* Slowed down the animation to 150ms per letter */
         });
     </script>
 </body>
+
 </html>
