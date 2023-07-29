@@ -59,6 +59,10 @@
             width: 200px; /* Increased width to make the input field longer */
         }
 
+        .form-control-fuzzy {
+            width: 100px;
+        }
+
     </style>
 </head>
 
@@ -87,6 +91,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="wallet">Wallet</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name="{{ form_fuzzy.form_data.name }}" placeholder="Fuzzy search" maxlength="{{ form_fuzzy.form_data.field.max_length }}" class="form-control-fuzzy">
+                                <button type="submit" class="btn btn-primary btn-block">Go</button>
+                            </div>
+                        </form>
+                    </li> -->
         
                     <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="monitorDropdown" role="button" data-bs-toggle="dropdown"
