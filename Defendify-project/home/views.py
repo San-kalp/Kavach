@@ -4,7 +4,7 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
-from .forms import searchForm
+from .forms import searchForm, walletForm
 from django.http import HttpResponseRedirect
 import requests
 import json
@@ -60,6 +60,15 @@ def wallet_explorer(address):
 def get_tx_data(txid):
     query = f"http://www.walletexplorer.com/api/1/tx?txid={txid}&caller=sankalp.chordia20@vit.edu"
     return json.loads(requests.get(query).text)
+
+
+def wallet(request):
+    form = walletForm()
+    context={'form':form}
+    return render(request,"home/wallet.html",context=context)
+
+def wallet_detail(request, wallet):
+    pass
 
 
 
