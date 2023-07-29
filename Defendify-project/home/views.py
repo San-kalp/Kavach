@@ -78,6 +78,11 @@ def wallet_detail(request, wallet):
     data = json.loads(requests.get(query).text)
     return render(request,"home/wallet_detail.html",{'response':data})
 
+def wallet_transactions(request, wallet):
+    query = f"http://www.walletexplorer.com/api/1/wallet?wallet={wallet}&from=0&count=100&caller=sankalp.chordia20@vit.edu"
+    data = json.loads(requests.get(query).text)
+    return render(request,"home/wallet_detail_transactions.html",{'response':data})
+
 
 
 
