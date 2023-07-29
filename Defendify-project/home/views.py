@@ -33,7 +33,8 @@ def home (request):
                 number_of_transactions = data["n_tx"]
                 transaction = data["txs"]
                 data = wallet_explorer(address=input_data).items()
-                context = [address_,amountReceived,amountSent,balance,number_of_transactions,transaction,unspent, data]
+                wallet_id = get_wallet_id(address_)
+                context = [address_,amountReceived,amountSent,balance,number_of_transactions,transaction,unspent, data, wallet_id["wallet_id"]]
                 return render(request,"home/addressInfo.html",{'response':context})
             elif re.match(r"^0x[a-fA-F0-9]{40}$",input_data):
                 url = f"https://api.etherscan.io/api?module=account&action=balance&address={input_data}&tag=latest&apikey={ETHERSCAN_API_KEY}"
@@ -57,8 +58,13 @@ def wallet_explorer(address):
     query = f"http://www.walletexplorer.com/api/1/address-lookup?address={address}&caller=sankalp.chordia20@vit.edu"
     return json.loads(requests.get(query).text)
 
+
 def get_tx_data(txid):
     query = f"http://www.walletexplorer.com/api/1/tx?txid={txid}&caller=sankalp.chordia20@vit.edu"
+    return json.loads(requests.get(query).text)
+
+def get_wallet_id(address):
+    query = f"http://www.walletexplorer.com/api/1/address?address={address}&from=0&count=100&caller=sankalp.chordia20@vit.edu"
     return json.loads(requests.get(query).text)
 
 
@@ -68,7 +74,9 @@ def wallet(request):
     return render(request,"home/wallet.html",context=context)
 
 def wallet_detail(request, wallet):
-    pass
+    query = f"http://www.walletexplorer.com/api/1/wallet-addresses?wallet={wallet}&from=0&count=100&caller=sankalp.chordia20@vit.edu"
+    data = json.loads(requests.get(query).text)
+    return render(request,"home/wallet_detail.html",{'response':data})
 
 
 

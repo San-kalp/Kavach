@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Front Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Home</a>
+        </div>
+    </nav>
+
+    <!-- Display JSON response using Bootstrap -->
+    <div class="container mt-5">
+        <h2>{{ response.label }}</h2>
+        <!-- <p><strong>Label:</strong> {{ response.label }}</p> -->
+        <p><strong>Wallet ID:</strong> {{ response.wallet_id }}</p>
+        <p><strong>Addresses Count:</strong> {{ response.addresses_count }}</p>
+
+        <h3>Addresses:</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Address</th>
+                    <th>Balance</th>
+                    <th>Incoming TXs</th>
+                    <th>Last Used in Block</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for address in response.addresses %}
+                <tr>
+                    <td>{{ address.address }}</td>
+                    <td>{{ address.balance }}</td>
+                    <td>{{ address.incoming_txs }}</td>
+                    <td>{{ address.last_used_in_block }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add the Bootstrap JS and jQuery links for additional functionality -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
