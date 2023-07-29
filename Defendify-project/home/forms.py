@@ -1,4 +1,7 @@
 from django import forms
 
-class addressForm(forms.Form):
-    address = forms.CharField(label="Address" , max_length=100)
+
+
+
+class searchForm(forms.Form):
+    form_data = forms.CharField(label="Search" , max_length=100)
