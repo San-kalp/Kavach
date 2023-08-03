@@ -91,6 +91,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="wallet">Wallet</a>
                     </li>
+                    <li class ="nav-item">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{aform}}
+                            <!-- <input type="text" name="{{ aform.aform_data.name }}" placeholder="Address" maxlength="{{ aform.aform_data.field.max_length }}" class="form-control"> -->
+                            <button type="submit" class="btn btn-primary btn-block">Go</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard">Dashboard</a>
+                    </li>
+
+
                     <!-- <li class="nav-item">
                         <form method="post">
                             {% csrf_token %}

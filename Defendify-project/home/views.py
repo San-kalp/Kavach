@@ -4,7 +4,7 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
-from .forms import searchForm, walletForm 
+from .forms import searchForm, walletForm , addressForm
 from django.http import HttpResponseRedirect
 import requests
 import json
@@ -14,11 +14,39 @@ import re
 renderer = JSONRenderer()
 ETHERSCAN_API_KEY = "2SFM3DIEINQ9Z7B27U9V4C4ICHUHR25R9A"
 
+regex_patterns = [
+        (r'^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$','Bitcoin Bech 32 Address', range(25,35)), #Have to resolve the issue
+        (r'^1[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin Legacy (P2PKH) Address', range(25, 35)),
+        (r'^1\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin Legacy (P2PKH) Address with Null Bytes', range(25, 35)),
+        (r'^3[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin P2SH Address', range(25, 35)),
+        (r'^3\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin P2SH Address with Null Bytes', range(25, 35)),
+        (r'^6P[a-km-zA-HJ-NP-Z1-9]{56}$', 'Bitcoin Private Key (WIF) Compressed', range(56, 57)),
+        (r'^6\x00P\x00([a-km-zA-HJ-NP-Z1-9]\x00){56}$', 'Bitcoin Private Key (WIF) Compressed with Null Bytes', range(56, 57)),
+        (r'^5[a-km-zA-HJ-NP-Z1-9]{50}$', 'Bitcoin Private Key (WIF) Uncompressed', range(50, 51)),
+        (r'^5\x00([a-km-zA-HJ-NP-Z1-9]\x00){50}$', 'Bitcoin Private Key (WIF) Uncompressed with Null Bytes', range(50, 51)),
+        (r'^[KL][a-km-zA-HJ-NP-Z1-9]{51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub)', range(51, 52)),
+        (r'^[KL]\x00([a-km-zA-HJ-NP-Z1-9]\x00){51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub) with Null Bytes', range(51, 52)),
+        (r'^xprv[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Private Key (xprv)', range(107, 109)),
+        # (r'^x\x00p\x00r\x00v\x00([a-km-zA-HJ-NP-Z1-9]\x00){107,108}$', 'Bitcoin BIP-32 Extended Private Key (xprv) with Null Bytes', range(107, 109)),
+        (r'^xpub[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Public Key (xpub)', range(107, 109)),
+        # (r'^x\x00p\x00u\x00b\x00([a-km-zA-HJ-NP-Z1-9]\x00){107,108}$', 'Bitcoin BIP-32 Extended Public Key (xpub) with Null Bytes', range(107, 109))
+
+        (r'^X[a-km-zA-HJ-NP-Z1-9]{33}$', 'Dash', range(33, 34)),
+        (r'^D[5-9A-HJ-NP-U][1-9A-HJ-NP-Za-km-z]{32}$', 'Doge', range(34, 35)),
+        (r'^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$', 'Litecoin', range(26, 34)),
+        (r'^r[0-9a-zA-Z]{24,34}$', 'Ripple', range(24, 35)),
+        (r'^[48][0-9AB][1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 1', range(95, 96)),
+        (r'^[48][0-9AB]|4[1-9A-HJ-NP-Za-km-z]{12}(?:[1-9A-HJ-NP-Za-km-z]{30})?[1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 2', range(95, 96)),
+        (r'^0x[a-fA-F0-9]{40}$', 'Ethereum', range(42, 43))
+    ]
+
 
 def home (request):
     form = searchForm()
+    aform = addressForm()
     if request.method =='POST':
         form = searchForm(request.POST)
+        aform = addressForm(request.POST)
         if form.is_valid():
             input_data = form.cleaned_data['form_data']
             if len(input_data)>=10 :
@@ -64,8 +92,20 @@ def home (request):
                 wallet_id = get_wallet_id(address_)
                 context = [address_,amountReceived,amountSent,balance,number_of_transactions,transaction,unspent, data, wallet_id["wallet_id"]]
                 return render(request,"home/addressInfo.html",{'response':context})
+            
 
-    context = {'form':form}
+        if aform.is_valid():
+            address = aform.cleaned_data['address']
+            for pattern, pattern_name, length_range in regex_patterns:
+                 if re.match(pattern, address) and len(address) in length_range:
+                     print(pattern, "\t" , pattern_name)
+
+
+                        
+
+
+
+    context = {'form':form,'aform':aform}
     return render(request,"home/home.html",context=context)
 
 
@@ -98,12 +138,6 @@ def wallet_transactions(request, wallet):
     query = f"http://www.walletexplorer.com/api/1/wallet?wallet={wallet}&from=0&count=100&caller=sankalp.chordia20@vit.edu"
     data = json.loads(requests.get(query).text)
     return render(request,"home/wallet_detail_transactions.html",{'response':data})
-
-
-
-
-
-
 
 
 
