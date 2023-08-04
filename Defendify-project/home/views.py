@@ -10,9 +10,11 @@ import requests
 import json
 import datetime
 import re
+import logging
 
 renderer = JSONRenderer()
 ETHERSCAN_API_KEY = "2SFM3DIEINQ9Z7B27U9V4C4ICHUHR25R9A"
+BLOCKCHAIR_API_KEY: str = "G___aebSH3d4ROnw2dVmnGbIAw9ls4zU"
 
 regex_patterns = [
         (r'^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$','Bitcoin Bech 32 Address', range(25,35)), #Have to resolve the issue
@@ -44,12 +46,12 @@ regex_patterns = [
 def home (request):
     form = searchForm()
     aform = addressForm()
-    if request.method =='POST':
+    if request.method == 'POST' and request.POST.get('coin_type') == "bitcoin":
         form = searchForm(request.POST)
         aform = addressForm(request.POST)
         if form.is_valid():
             input_data = form.cleaned_data['form_data']
-            if len(input_data)>=10 :
+            if len(input_data) >=10 :
                 if re.match(r"^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$",input_data) :
                     url = "https://blockchain.info/rawaddr/%s" %input_data
                     unspent = requests.get('https://blockchain.info/unspent?active=%s' % input_data).json()
@@ -65,15 +67,10 @@ def home (request):
                     wallet_id = get_wallet_id(address_)
                     context = [address_,amountReceived,amountSent,balance,number_of_transactions,transaction,unspent, data, wallet_id["wallet_id"]]
                     return render(request,"home/addressInfo.html",{'response':context})
-                elif re.match(r"^0x[a-fA-F0-9]{40}$",input_data):
-                    url = f"https://api.etherscan.io/api?module=account&action=balance&address={input_data}&tag=latest&apikey={ETHERSCAN_API_KEY}"
-                    response = requests.get(url)
-                    data = json.loads(response.text)
-                    print(data)
-                else :
+                else:
                     context = get_tx_data(input_data)
                     return render(request,"home/transactionInfo.html",{'response':context})
-            else :
+            else:
                 query = f"http://www.walletexplorer.com/api/1/firstbits?prefix={input_data}&caller=sankalp.chordia20@vit.edu"
                 response = requests.get(query)
                 address = json.loads(response.text)["address"]
@@ -100,14 +97,77 @@ def home (request):
                  if re.match(pattern, address) and len(address) in length_range:
                      print(pattern, "\t" , pattern_name)
 
+    elif request.method == 'POST' and request.POST.get('coin_type') == "ethereum":
+        form = searchForm(request.POST)
+        aform = addressForm(request.POST)
+        if form.is_valid():
+            input_data = form.cleaned_data['form_data']
+            if len(input_data) >= 10:
+                if re.match(r"^0x[a-fA-F0-9]{40}$", input_data):
+                    url = "https://api.blockchair.com/ethereum/dashboards/address/%s?apikey=%s" % (
+                        input_data, BLOCKCHAIR_API_KEY)
+                    response = requests.get(url)
+                    data = response.json()
+                    address_ = data["data"][input_data]["address"]
+                    balance = address_["balance"]
+                    balance_usd = address_["balance_usd"]
+                    number_of_transactions = address_["transaction_count"]
+                    calls = data["data"][input_data]["calls"]
+                    transactions = []
+                    for call in calls:
+                        block_id = call["block_id"]
+                        transaction_hash = call["transaction_hash"]
+                        sender = call["sender"]
+                        recipient = call["recipient"]
+                        value = call["value"]
+                        value_usd = call["value_usd"]
+                        transferred = call["transferred"]
+                        transactions.append(
+                            [block_id, transaction_hash, sender, recipient, value, value_usd, transferred])
+                    amount_received, amount_sent = get_amount_received_sent(address_, ETHERSCAN_API_KEY)
+                    print("Data is : {}".format(data))
+                    context = [address_, balance, balance_usd, number_of_transactions, transactions, amount_received,
+                               amount_sent]
+                    return render(request, "home/addressInfo.html", {'response': context})
 
-                        
+                else:
+                    url = "https://api.blockchair.com/ethereum/dashboards/transaction/%s" % input_data
+                    response = requests.get(url)
+                    data = response.json()
+                    if data and "data" in data and input_data in data["data"]:
+                        transaction = data["data"][input_data]
+                        context = [transaction]
+                        return render(request, "home/transactionInfo.html", {'response': context})
+                    else:
+                        return HttpResponse("Unable to retrieve Ethereum transaction.")
+            else:
+                return HttpResponse("Fuzzy search is not supported for Ethereum addresses.")
+
+    context = {'form': form, 'aform': aform}
+    return render(request, "home/home.html", context=context)
 
 
-
-    context = {'form':form,'aform':aform}
-    return render(request,"home/home.html",context=context)
-
+def get_amount_received_sent(address, api_key):
+    try:
+        url = f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=asc&apikey={api_key}"
+        response = requests.get(url)
+        data = response.json()
+        transactions = data['result']
+        amount_received = 0
+        amount_sent = 0
+        for tx in transactions:
+            if tx['to'] == address:
+                amount_received += int(tx['value'])
+            if tx['from'] == address:
+                amount_sent += int(tx['value'])
+        # Convert Wei to Ether
+        amount_received = amount_received / 10**18
+        amount_sent = amount_sent / 10**18
+    except Exception as e:
+        return HttpResponse("Error when fetching data in func: {}".format(e))
+    else:
+        print("Data fetched from {0}: {1}".format(url, data))
+    return amount_received, amount_sent
 
 
 def wallet_explorer(address):

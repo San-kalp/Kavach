@@ -53,26 +53,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard">Dashboard</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <form method="post">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <input type="text" name="{{ form_fuzzy.form_data.name }}" placeholder="Fuzzy search" maxlength="{{ form_fuzzy.form_data.field.max_length }}" class="form-control-fuzzy">
-                                <button type="submit" class="btn btn-primary btn-block">Go</button>
-                            </div>
-                        </form>
-                    </li> -->
-        
-                    <!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="monitorDropdown" role="button" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Monitor</a>
-                        <div class="dropdown-menu" aria-labelledby="monitorDropdown">
-                            <a class="dropdown-item" href="#">Bitcoin</a>
-                            <a class="dropdown-item" href="#">Litecoin</a>
-                            <a class="dropdown-item" href="#">Ethereum</a>
-                        </div>
-                    </li> -->
-                    <!-- Add more navbar items as needed -->
                 </ul>
             </div>
         </div>
@@ -85,7 +65,18 @@
             <form method="post" class="search-form">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
+                        <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
+                        <div class="form-group">
+                            <!-- Add a select input field for coin type -->
+                            <select name="coin_type" class="form-control">
+                                <option value="bitcoin">Bitcoin</option>
+                                <option value="ethereum">Ethereum</option>
+                                <!-- Add more options as needed -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
                         <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
                         <div class="form-group">
                             <!-- Add the 'form-control' class to the input field for Bootstrap styling -->
