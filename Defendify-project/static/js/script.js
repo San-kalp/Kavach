@@ -1,7 +1,6 @@
 /**
  * scroll revreal effect
  */
-
 const sections = document.querySelectorAll("[data-section]");
 
 const scrollReveal = function () {

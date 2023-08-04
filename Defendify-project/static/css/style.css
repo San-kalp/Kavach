@@ -359,7 +359,7 @@ body.active { overflow: hidden; }
   width: 100%;
   background-color: var(--eerie-black-1);
   padding-block: 15px;
-  z-index: 4;
+ 
 }
 
 .header.active {
