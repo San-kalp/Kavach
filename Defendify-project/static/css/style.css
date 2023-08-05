@@ -1,3 +1,48 @@
+.google_element{
+  position: absolute;
+}
+
+.goog-te-gadget{
+   color: transparent;
+}
+
+
+/*hiding the google translate*/
+.VIpgJd-ZVi9od-l4eHX-hSRGPd{
+  display: none !important;
+}
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd{
+  display: none !important;
+}
+
+.translated-ltr{
+  margin-top: -40px;
+  }
+
+  .translated-ltr{
+      margin-top: -40px;
+  }
+
+
+  .goog-logo-link{
+      display: none !important;
+  }
+
+  #google_element{
+      right: 0px;
+      bottom: 4px;
+      margin-inline: auto;
+  }
+  #flag{
+    right: 0px;
+    width: 15px;
+    left: 40px;
+    align-items:end;
+    height: auto!important ;
+    margin-inline: auto;
+  }
+
 /*colorpalate*/
 :root {
 
@@ -1064,7 +1109,10 @@ address.footer-contact-link { max-width: 30ch; }
 
   .header > .container { gap: 50px; }
 
-  .nav-toggle-btn { display: none; }
+  .nav-toggle-btn { 
+    display:block;
+    position: absolute;
+  }
 
   .navbar,
   .navbar.active {
