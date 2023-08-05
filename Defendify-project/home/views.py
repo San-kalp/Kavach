@@ -11,10 +11,11 @@ import json
 import datetime
 import re
 import logging
+from web3 import Web3
 
 renderer = JSONRenderer()
 ETHERSCAN_API_KEY = "2SFM3DIEINQ9Z7B27U9V4C4ICHUHR25R9A"
-BLOCKCHAIR_API_KEY: str = "G___aebSH3d4ROnw2dVmnGbIAw9ls4zU"
+INFURA_API_KEY: str = "7880212ac22945e58ba986a0d644f84e"
 
 regex_patterns = [
         (r'^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$','Bitcoin Bech 32 Address', range(25,35)), #Have to resolve the issue
@@ -104,31 +105,43 @@ def home (request):
             input_data = form.cleaned_data['form_data']
             if len(input_data) >= 10:
                 if re.match(r"^0x[a-fA-F0-9]{40}$", input_data):
-                    url = "https://api.blockchair.com/ethereum/dashboards/address/%s?apikey=%s" % (
-                        input_data, BLOCKCHAIR_API_KEY)
-                    response = requests.get(url)
-                    data = response.json()
-                    address_ = data["data"][input_data]["address"]
-                    balance = address_["balance"]
-                    balance_usd = address_["balance_usd"]
-                    number_of_transactions = address_["transaction_count"]
-                    calls = data["data"][input_data]["calls"]
-                    transactions = []
-                    for call in calls:
-                        block_id = call["block_id"]
-                        transaction_hash = call["transaction_hash"]
-                        sender = call["sender"]
-                        recipient = call["recipient"]
-                        value = call["value"]
-                        value_usd = call["value_usd"]
-                        transferred = call["transferred"]
-                        transactions.append(
-                            [block_id, transaction_hash, sender, recipient, value, value_usd, transferred])
-                    amount_received, amount_sent = get_amount_received_sent(address_, ETHERSCAN_API_KEY)
-                    print("Data is : {}".format(data))
-                    context = [address_, balance, balance_usd, number_of_transactions, transactions, amount_received,
-                               amount_sent]
-                    return render(request, "home/addressInfo.html", {'response': context})
+                    try:
+                        infura_url = f"https://mainnet.infura.io/v3/{INFURA_API_KEY}"
+                        w3 = Web3(Web3.HTTPProvider(infura_url))
+
+                        if not w3.is_address(input_data):
+                            raise ValueError(f"The address {input_data} is not valid")
+
+                        input_data_c = Web3.to_checksum_address(input_data)
+
+
+                        # Get balance of the address in Ether
+                        balance = w3.eth.get_balance(input_data_c) / 10**18
+
+                        url = f"https://api.etherscan.io/api?module=account&action=txlist&address={input_data}&startblock=0&endblock=99999999&page=1&offset=100&sort=desc&apikey={ETHERSCAN_API_KEY}"
+                        response = requests.get(url)
+                        transactions = response.json()['result']
+                        number_of_transactions = len(transactions)
+
+                        # You can now use the transactions list to calculate total_received and total_sent
+                        total_received = 0
+                        total_sent = 0
+                        for transaction in transactions:
+                            value = int(transaction['value']) / 10**18  # Convert Wei to Ether
+                            if transaction['to'] == input_data:
+                                total_received += value
+                            if transaction['from'] == input_data:
+                                total_sent += value
+
+                        context = [input_data, total_received, total_sent, balance, number_of_transactions, transactions]
+                        return render(request, "home/addressInfo.html", {'response': context})
+
+                    except requests.exceptions.RequestException as e:
+                        error_message = f"An error occurred while fetching data: {e}"
+                        return HttpResponse('error_message: {}'.format(error_message))
+                    except KeyError:
+                        error_message = "Data format error: Key not found in the response."
+                        return HttpResponse('error_message: {}'.format(error_message))
 
                 else:
                     url = "https://api.blockchair.com/ethereum/dashboards/transaction/%s" % input_data
@@ -143,31 +156,85 @@ def home (request):
             else:
                 return HttpResponse("Fuzzy search is not supported for Ethereum addresses.")
 
+
+    elif request.method == 'POST' and request.POST.get('coin_type') == "dogecoin":
+        form = searchForm(request.POST)
+        aform = addressForm(request.POST)
+        if form.is_valid():
+            input_data = form.cleaned_data['form_data']
+            if len(input_data) >= 10:
+                try:
+                    # Get balance of the address in Dogecoin
+                    url = f"https://dogechain.info/api/v1/address/balance/{input_data}"
+                    response = requests.get(url)
+                    balance = float(response.json()['balance'])
+
+                    # Get received and sent amount of the address
+                    url = f"https://dogechain.info/api/v1/address/received/{input_data}"
+                    response = requests.get(url)
+                    total_received = float(response.json()['received'])
+
+                    url = f"https://dogechain.info/api/v1/address/sent/{input_data}"
+                    response = requests.get(url)
+                    total_sent = float(response.json()['sent'])
+
+                    # Get transactions of the address
+                    url = f"https://dogechain.info/api/v1/address/transactions/{input_data}"
+                    response = requests.get(url)
+                    transaction_hashes = response.json()['transactions']
+
+                    # Get detailed information for each transaction
+                    transactions = []
+                    for tx_hash in transaction_hashes:
+                        url = f"https://dogechain.info/api/v1/transaction/{tx_hash}"
+                        response = requests.get(url)
+                        transactions.append(response.json())
+
+                    # Get number of transactions
+                    number_of_transactions = len(transactions)
+
+                    # Get unspent transactions
+                    url = f"https://dogechain.info/api/v1/address/unspent/{input_data}"
+                    response = requests.get(url)
+                    unspent_transaction_hashes = response.json()['unspent_outputs']
+
+                    # Get detailed information for each unspent transaction
+                    unspent_transactions = []
+                    for tx_hash in unspent_transaction_hashes:
+                        url = f"https://dogechain.info/api/v1/transaction/{tx_hash}"
+                        response = requests.get(url)
+                        unspent_transactions.append(response.json())
+
+                    # Get wallet id
+                    # Note: The Dogechain API does not provide a direct way to get the wallet id. 
+                    # If the wallet id is included in the transaction data, you can extract it from there.
+                    # For example, if the wallet id is included in the 'script' field of the transaction data:
+                    wallet_id = transactions[0]['script'] if transactions else None
+
+                    # Note: The Dogechain API does not provide a method to fetch transactions of an address
+
+                    context = [input_data, total_received, total_sent, balance]
+                    return render(request, "home/addressInfo.html", {'response': context})
+
+                except requests.exceptions.RequestException as e:
+                    error_message = f"An error occurred while fetching data from {url}: {e}"
+                    
+                except KeyError as e:
+                    error_message = f"Data format error: Key {e} not found in the response."
+                
+                except ValueError as e:
+                    error_message = f"Conversion error: {e}"
+
+                except Exception as e:
+                    error_message = f"Unknown error: {e}"
+
+                finally:
+                    return HttpResponse('error_message: {}'.format(error_message))
+            else:
+                return HttpResponse("Fuzzy search is not supported for Dogecoin addresses.")
+        
     context = {'form': form, 'aform': aform}
     return render(request, "home/home.html", context=context)
-
-
-def get_amount_received_sent(address, api_key):
-    try:
-        url = f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=asc&apikey={api_key}"
-        response = requests.get(url)
-        data = response.json()
-        transactions = data['result']
-        amount_received = 0
-        amount_sent = 0
-        for tx in transactions:
-            if tx['to'] == address:
-                amount_received += int(tx['value'])
-            if tx['from'] == address:
-                amount_sent += int(tx['value'])
-        # Convert Wei to Ether
-        amount_received = amount_received / 10**18
-        amount_sent = amount_sent / 10**18
-    except Exception as e:
-        return HttpResponse("Error when fetching data in func: {}".format(e))
-    else:
-        print("Data fetched from {0}: {1}".format(url, data))
-    return amount_received, amount_sent
 
 
 def wallet_explorer(address):
