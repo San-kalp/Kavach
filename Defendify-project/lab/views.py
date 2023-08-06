@@ -139,6 +139,7 @@ def SageMaker(request):
      c.test_different_hp_graph_sage()
      data = c.FastRP()
      context = {'data':data}
+     
      return render(request,'lab/wannacry/sagemaker.html',context=context)
 
 

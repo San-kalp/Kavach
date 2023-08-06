@@ -10,3 +10,7 @@ class searchForm(forms.Form):
 class walletForm(forms.Form):
     wallet = forms.CharField(label="Wallet", max_length=100)
 
+
+class addressForm(forms.Form):
+    address = forms.CharField(label="address",max_length=100)
+
