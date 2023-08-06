@@ -6,7 +6,7 @@
     <title>Home Page</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,9 +28,9 @@
 </head>
 <body>
     <div class="container">
-        <form class="form"  method="POST">
+        <form class="form" method="POST">
             {% csrf_token %}
-            {{form}}
+            {{ form }}
             <button type="submit">Submit</button>
         </form>
         <div class="text">

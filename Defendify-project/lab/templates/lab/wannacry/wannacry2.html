@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        /* Navbar styles */
+        .navbar-custom {
+            background-color: black;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{% url 'create_graph_1' %}" class="btn btn-primary mr-2">Graph</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'page_rank_1' %}" class="btn btn-primary mr-2">Page Rank</a>
+                    </li>
+                    <li class = "nav-item">
+                            <button id="show-data-btn" class="btn btn-primary mr-2">Show Data</button>
+                    </li>
+                    <li class = "nav-item">
+                        <a href="{% url 'SageMaker' %}" class="btn btn-primary mr-2">Run Sage Maker</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    
+    
+
+
+
+
+<div class="col-md-12">
+
+    <div class="pyvis-graph">
+        {% include 'pvis_graph_file.html' %}
+    </div>
+
+
+    <div class="text-left mt-2">
+        <p>Number of nodes : {{n}}</p>
+        <p>Number of relationships : {{r}}</p>
+        <div class="row-cols-1">
+            <a href="{% url 'btc_txid' %}" class="btn btn-primary mr-2">Amount passing through transaction node</a>
+            <a href="{% url 'btc_address_node' %}" class="btn btn-primary mr-2">Amount passing through address node</a>
+            <a href="{% url 'risk_rating_tx' %}" class="btn btn-primary mr-2">Risk Rating of Transaction Nodes</a>
+            <a href="{% url 'risk_rating_address' %}" class="btn btn-primary mr-2">Risk Rating of Address Nodes</a>
+        </div>
+       
+
+    </div>
+</div>
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the button element
+        var showDataBtn = document.getElementById("show-data-btn");
+        
+        // Add a click event listener to the button
+        showDataBtn.addEventListener("click", function () {
+            // Redirect to the desired URL using JavaScript
+            window.location.href = "{% url 'show_data1' %}";
+        });
+    });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Table</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Bitcoin Address</th>
+                    <th>Total BTC</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+                <!-- Data rows will be populated here -->
+            </tbody>
+        </table>
+        <button id="download-json-btn" class="btn btn-primary">Download JSON</button>
+    </div>
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Inline JavaScript to populate the data and download JSON -->
+    <script>
+        const data = JSON.parse('{{ data|escapejs }}');
+
+        function populateTable(data) {
+            const tableBody = document.getElementById('data-body');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.btc_addr}</td>
+                    <td>${item.total_btc}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Call the function to populate the table
+        populateTable(data);
+
+        // Function to trigger JSON download
+        function downloadJSON() {
+            const jsonBlob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            const jsonUrl = URL.createObjectURL(jsonBlob);
+            const link = document.createElement('a');
+            link.href = jsonUrl;
+            link.download = 'data.json';
+            link.click();
+        }
+
+        // Attach event listener to the download button
+        document.getElementById('download-json-btn').addEventListener('click', downloadJSON);
+    </script>
+</body>
+</html>

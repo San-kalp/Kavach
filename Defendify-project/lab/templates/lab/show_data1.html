@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Show data</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px; /* Set the base font size */
+        }
+
+        h2 {
+            font-size: 24px; /* Increase the font size for the heading */
+            color: #333; /* Set the heading color */
+        }
+
+        /* Add more CSS rules for other elements if needed */
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <section>
+                    <h2>Data :- </h2>
+                    <!-- Render the DataFrame HTML using template tags -->
+                    {{ html|safe }}
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Download CSV button -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a href="#" id="downloadCSVButton" class="btn btn-primary">Download CSV</a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // JavaScript function to download the data as CSV
+        document.getElementById("downloadCSVButton").addEventListener("click", function() {
+            // Get the HTML content of the table
+            var tableHtml = "{{ html|safe }}";
+            
+            // Convert the HTML to a Blob
+            var blob = new Blob([tableHtml], { type: "text/csv" });
+            
+            // Create a download link
+            var a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "data.csv";
+            
+            // Append the link to the body and trigger the click event
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    </script>
+</body>
+</html>
