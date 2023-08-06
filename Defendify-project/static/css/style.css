@@ -1,9 +1,98 @@
+.contMain {
+  display: flex;
+  flex-direction: row;
+}
+.navPanel {
+  margin-top: 1vw;
+  min-height: 100vh;
+  min-width: 14vw;
+  background-color: #212529 !important;
+  color: #fff;
+  border: 0.5px solid #3b3c3c;
+}
+.navPanel .nav-item,
+.navPanel .nav-link {
+  height: 3.5vw;
+  margin-left: 0.2vw;
+  padding: 1vw;
+  display: flex;
+  align-items: center;
+}
+.navPanel .nav-item:hover {
+  background-color: rgba(0, 0, 255, 0.26);
+  border: 0.5px solid blue;
+  color: #fff !important;
+  cursor: pointer;
+}
+
+.start-cont {
+  padding: 2vw;
+}
+
+/*hiding the google translate*/
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+  display: none !important;
+}
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd {
+  display: none !important;
+}
+
+.translated-ltr {
+  margin-top: -40px;
+}
+
+.translated-ltr {
+  margin-top: -40px;
+}
+
+.goog-logo-link {
+  display: none !important;
+}
+
+
+.contMain {
+  display: flex;
+  flex-direction: row;
+}
+.navContainer {
+  max-width: 100% !important;
+}
+.regex_search {
+  padding: 0.5vw;
+  text-align: center;
+  align-items: center;
+  display: flex;
+}
+.search-button-container {
+  margin-top: 2px; /* Add margin for spacing */
+  display: flex;
+  margin-top: 2px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5vw;
+}
+.address_search{
+    gap: 0 !important;
+}
+.address_search .form-control {
+    width: 25vw;
+    height: 3vw;
+    font-size: 1.2vw;
+    background-color: rgba(0, 0, 255, 0.26);
+    border: 0.5px solid blue;
+    color: #fff !important;
+}
+
+
 .google_element {
   position: absolute;
 }
 
 .goog-te-gadget {
-  color: transparent;
+  color: transparent !important;
 }
 
 .start-cont {
