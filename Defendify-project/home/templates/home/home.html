@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,155 +11,160 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css"/>
-</head>
+  </head>
 
-<body>
+  <style>
+    
+  </style>
+
+  <body>
     {% load static %}
     <!--scritps-->
     <script src="/static/js/script.js" defer></script>
+
     <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container">
+            <!-- Navbar brand or logo -->
+            <a href="#" class="logo">
+              <img
+                src="/static/images/logo.png"
+                width="30"
+                height="42"
+                alt="Cryptex logo"
+              />
+              Defendify
+            </a>
 
-    <header>
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <div class="container">
-                <!-- Navbar brand or logo -->
-                <a href="#" class="logo">
-                    <img src="/static/images/logo.png" width="30" height="42" alt="Cryptex logo">
-                    Defendify
-                  </a>
-    
-                <!-- Toggle button for responsive navigation -->
-                <button class="nav-toggle-btn" aria-label="Toggle menu" data-nav-toggler>
-                    <span class="line line-1"></span>
-                    <span class="line line-2"></span>
-                    <span class="line line-3"></span>
-                  </button>
-    
-                <!-- Navbar items -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="navbar-item">
-                            <a class="navbar-link active" href="#">Home</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="#">About</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="wallet">Wallet</a>
-                        </li>
-                        <!-- <li class="navbar-item">
-                            <a class="navbar-link" href="wallet">Address mapping</a>
-                        </li> -->
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="https://defendify-crypto-dashboard.vercel.app/">Dashboard</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="lab">Lab</a>
-                        </li>
+            <!-- Toggle button for responsive navigation -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="QR-code">QR code</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a class="navbar-link" href="regex">Regex</a>
-                        </li>
-
-                        
-
-
-                        
-                        <!-- <li class="nav-item">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <input type="text" name="{{ form_fuzzy.form_data.name }}" placeholder="Fuzzy search" maxlength="{{ form_fuzzy.form_data.field.max_length }}" class="form-control-fuzzy">
-                                    <button type="submit" class="btn btn-primary btn-block">Go</button>
-                                </div>
-                            </form>
-                        </li> -->
-            
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="monitorDropdown" role="button" data-bs-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Monitor</a>
-                            <div class="dropdown-menu" aria-labelledby="monitorDropdown">
-                                <a class="dropdown-item" href="#">Bitcoin</a>
-                                <a class="dropdown-item" href="#">Litecoin</a>
-                                <a class="dropdown-item" href="#">Ethereum</a>
-                            </div>
-                        </li> -->
-                        <!-- Add more navbar items as needed -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-   
-<main>
-    <article>
-        <section class="section hero" aria-label="hero" data-section>
-            <div class="start-cont">
-    
-              <div class="hero-content">
-    
-                <h1 class="h1 hero-title">Investigate the true Cryptosecuirty</h1>
-    
-                <p class="hero-text">
-                  One tool for all kinds of crypto investigation, scanning of fraudlant ips 
-                </p>
-    
-                <div class="container">
-                    <div id="projectName">Defendify.</div>
-                    <div class="input-group search-button-container">
-                        <form method="post" class="search-form">
+            <!-- Navbar items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="navbar-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="navbar-link" href="wallet">Wallet</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="navbar-link" href="blogs">Blogs</a>
+                    </li>
+                    <li class="navbar-item">
+                      <a class="navbar-link" href="lab">Lab</a>
+                  </li>
+                  <li class="navbar-item">
+                    <a class="navbar-link" href="qrcode">QR</a>
+                </li>
+                    <li class ="nav-item">
+                        <form method="post">
                             {% csrf_token %}
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
-                                    <div class="form-group">
-                                        <!-- Add the 'form-control' class to the input field for Bootstrap styling -->
-                                        <input type="text" name="{{ form.form_data.name }}" placeholder="Address, Transaction Id" maxlength="{{ form.form_data.field.max_length }}" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <!-- Add the 'btn' and 'btn-primary' classes for Bootstrap styling of the button -->
-                                    <button type="submit" class="btn btn-primary btn-block">Go</button>
-                                </div>
-                            </div>
+                            {{aform}}
+                            <!-- <input type="text" name="{{ aform.aform_data.name }}" placeholder="Address" maxlength="{{ aform.aform_data.field.max_length }}" class="form-control"> -->
+                            <button type="submit" class="btn btn-primary btn-block">Go</button>
                         </form>
+                    </li>
+                    <li class="navbar-item">
+                      <a class="navbar-link" href="https://defendify-crypto-dashboard.vercel.app/">Dashboard</a>
+                  </li>
+                </ul>
+                <div id="google_translate_element"></div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+      <article>
+        <section class="section hero" aria-label="hero" data-section>
+          <div class="start-cont">
+            <div class="hero-content">
+              <h1 class="h1 hero-title">
+                Investigate the true Cryptosecuirty
+              </h1>
+
+              <p class="hero-text">
+                One tool for all kinds of crypto investigation, scanning of
+                fraudlant IP addresses
+              </p>
+              <div class="container address_search">
+                <div id="projectName">Defendify.</div>
+                <div class="input-group">
+                  <form method="post" class="search-form">
+                    {% csrf_token %}
+                    <div class="row search-button-container">
+                      <div class="col-md-8">
+                        <!-- Add the 'form-group' class to wrap the input field for proper Bootstrap styling -->
+                        <div class="form-group">
+                          <!-- Add the 'form-control' class to the input field for Bootstrap styling -->
+                          <input
+                            type="text"
+                            name="{{ form.form_data.name }}"
+                            placeholder="Address, Transaction Id"
+                            maxlength="{{ form.form_data.field.max_length }}"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <!-- Add the 'btn' and 'btn-primary' classes for Bootstrap styling of the button -->
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-block"
+                        >
+                          Go
+                        </button>
+                      </div>
                     </div>
+                  </form>
                 </div>
               </div>
-              
-              <figure class="hero-banner">
-                <img src="/static/images/hero-banner.png" width="570" height="448" alt="hero banner" class="w-100">
-              </figure>
             </div>
-          </section>
-    </article>
-</main>
-    
-  
+
+            <figure class="hero-banner">
+              <img
+                src="/static/images/hero-banner.png"
+                width="570"
+                height="448"
+                alt="hero banner"
+                class="w-100"
+              />
+            </figure>
+          </div>
+
+          <script
+            type="text/javascript"
+            src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          ></script>
+        </section>
+      </article>
+    </main>
 
     <!-- Add the Bootstrap JS and jQuery links for additional functionality -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script> -->
 
     <script>
-        // JavaScript to handle the letter-by-letter animation
-        $(document).ready(function () {
-            var projectTitle = $("#projectName").text();
-            $("#projectName").empty();
-            var i = 0;
-            var interval = setInterval(function () {
-                $("#projectName").append(projectTitle.charAt(i));
-                i++;
-                if (i > projectTitle.length) {
-                    clearInterval(interval);
-                }
-            }, 150); /* Slowed down the animation to 150ms per letter */
-        });
+      // JavaScript to handle the letter-by-letter animation
+      $(document).ready(function () {
+        var projectTitle = $("#projectName").text();
+        $("#projectName").empty();
+        var i = 0;
+        var interval = setInterval(function () {
+          $("#projectName").append(projectTitle.charAt(i));
+          i++;
+          if (i > projectTitle.length) {
+            clearInterval(interval);
+          }
+        }, 150); /* Slowed down the animation to 150ms per letter */
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,20 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/static/images/logo.png">
+    <link rel="stylesheet" href="./static/style.css">
     <title>Top Exchanges, Pools, and Services</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
+        body {
+            background-color: black;
+            color: #fff !important;
+        }
+
         /* Custom CSS for the container */
         .custom-container {
             padding: 20px;
         }
 
         /* Custom CSS to remove row lines in the table */
-        .table-bordered tbody tr {
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 4vw 4vw;
+        }
+
+        .table tbody,
+        th,
+        tr,
+        td {
             border: none;
+            color: #fff;
+        }
+
+        .table td {
+            box-sizing: border-box;
+            border-radius: 5px;
+            padding: 2vw 2vw 2vw 2vw;
+            background-color: #16191a;
+            box-shadow: 1px 1px 1px 1px rgba(255, 255, 255, 0.216);
+            /*box-shadow: 1px 1px 5px 4px rgba(0, 59, 253, 0.355);*/
+            transition: all 0.4s ease-in-out;
+        }
+
+        .table td:hover {
+            box-shadow: 1px 3px 3px 1px rgba(255, 255, 255, 0.456);
+            transition: all 0.4s ease-in-out;
+            transform: scale(1.15) !important; 
+        }
+
+        .table td a {
+            /* color: #fff; */
+            text-decoration: none;
         }
 
         /* Custom CSS for the navbar */
@@ -36,6 +75,7 @@
         } */
     </style>
 </head>
+
 <body>
 
     <!-- Navbar -->
@@ -47,10 +87,11 @@
 
     <!-- Content -->
     <div class="container custom-container">
-        <h6 class="text-center" style="font-family: 'Courier New', Courier, monospace;">Top Exchanges, Pools, and Services</h6>
+        <h6 class="text-center" style="font-family: 'Courier New', Courier, monospace;">Top Exchanges, Pools, and
+            Services</h6>
 
         <!-- Combined Table -->
-        <table class="table table-bordered">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Exchanges</th>
@@ -66,18 +107,24 @@
                         <a href="wallet/Binance">Binance</a>
                     </td>
                     <td> <a href="wallet/BTCCPool">BTCCPool</a></td>
-                    <td><a href="wallet/CoinPayments.net">CoinPayments.net</a></td></td>
-                    <td><a href="wallet/SatoshiDice.com">SatoshiDice.com</a></td></td>
-                    <td><a href="wallet/AgoraMarket">AgoraMarket</a></td></td>
+                    <td><a href="wallet/CoinPayments.net">CoinPayments.net</a></td>
+                    </td>
+                    <td><a href="wallet/SatoshiDice.com">SatoshiDice.com</a></td>
+                    </td>
+                    <td><a href="wallet/AgoraMarket">AgoraMarket</a></td>
+                    </td>
                 </tr>
                 <tr>
                     <td>
                         <a href="wallet/Huobi.com">Huobi.com</a>
                     </td>
                     <td> <a href="wallet/SlushPool.com ">SlushPool.com </a></td>
-                    <td><a href="wallet/Xapo.com">Xapo.com</a></td></td>
-                    <td><a href="wallet/LuckyB.it ">LuckyB.it </a></td></td>
-                    <td><a href="wallet/BetcoinDice.tm">BetcoinDice.tm</a></td></td>
+                    <td><a href="wallet/Xapo.com">Xapo.com</a></td>
+                    </td>
+                    <td><a href="wallet/LuckyB.it ">LuckyB.it </a></td>
+                    </td>
+                    <td><a href="wallet/BetcoinDice.tm">BetcoinDice.tm</a></td>
+                    </td>
                 </tr>
                 <tr>
                     <td><a href="wallet/Bittrex.com">Bittrex.com</a></td>
@@ -152,8 +199,8 @@
                     <td> <a href="wallet/FortuneJack.com">FortuneJack.com</a></td>
                     <td><a href="wallet/MiddleEarthMarketplace">MiddleEarthMarketplacet</a></td>
                 </tr>
-                
-                
+
+
             </tbody>
         </table>
     </div>
@@ -164,4 +211,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.2/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

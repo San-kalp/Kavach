@@ -143,25 +143,8 @@ def wallet_transactions(request, wallet):
     data = json.loads(requests.get(query).text)
     return render(request,"home/wallet_detail_transactions.html",{'response':data})
 
-def qr_code(request):
-    context = {'Data':'Hello world'}
-    return render(request,"home/qr-code.html",context = context)
+def blogs(request):
+    return render(request, "home/blogs.html")
 
-
-
-
-def handle_regex(request):
-    form = regexForm()
-    if request.method == 'POST':
-        form = regexForm(request.POST)
-        if form.is_valid():
-            regex = form.cleaned_data['regex']
-            print(regex)
- 
-
-    return render(request , "home/regex.html")
-
-
-
-
-
+def qrcode(request):
+     return render(request, "home/qrcode.html")

@@ -1,7 +1,9 @@
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
 /**
  * scroll revreal effect
  */
-
 const sections = document.querySelectorAll("[data-section]");
 
 const scrollReveal = function () {
