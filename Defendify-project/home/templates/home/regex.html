@@ -11,28 +11,41 @@
     <!-- Your custom CSS styles -->
     <style>
         /* Add your custom styles here */
+        body {
+            background-color: #f8f9fa;
+        }
+
         .container {
             margin-top: 50px;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <h2 class="text-center mb-4">Enter Regex</h2>
     
-    <form method="post" >
+    <form method="post">
         {% csrf_token %}
         {{form}}
-        <!-- Form inputs -->
-        <!-- <div class="mb-3">
-            <label for="bitcoin_address" class="form-label">Public address</label>
-            <input type="text" class="form-control" id="public_address" name="public_address" required>
-            <small class="form-text text-muted">Enter your address.</small>
-        </div>
-         -->
-
+        
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
     </form>
 </div>
 
