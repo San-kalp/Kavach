@@ -9,5 +9,9 @@ urlpatterns = [
     path("wallet/<str:wallet>", views.wallet_detail, name ="wallet-detail"),
     path("wallet/<str:wallet>/transactions",views.wallet_transactions,name ="wallet_transactions"),
     path("blogs/",views.blogs, name="blogs"),
-    path("qrcode/",views.qrcode, name="qrcode")
+    path("qrcode/",views.qrcode, name="qrcode"),
+    path('login',views.LoginInterfaceView.as_view(),name='login'),
+    path('logout',views.LogoutInterfaceView.as_view(),name='logout'),
+    path('signup',views.SignupView.as_view(),name='signup'),
+    
 ]

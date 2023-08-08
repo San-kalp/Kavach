@@ -1,11 +1,17 @@
-from django.shortcuts import render 
+from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from .forms import searchForm, walletForm , addressForm
-from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import TemplateView
+from django.views.generic import CreateView #For signing up new user
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView , LogoutView
+from django.contrib.auth.forms import UserCreationForm
 import requests
 import json
 import datetime
@@ -149,3 +155,18 @@ def blogs(request):
 
 def qrcode(request):
      return render(request, "home/qrcode.html")
+
+class AuthorisedView(LoginRequiredMixin , TemplateView):
+    template_name='home/authorize.html'
+    login_url ='/admin'
+
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'home/register.html'
+    success_url="/home/home.html"
+
+class LogoutInterfaceView(LogoutView):
+    template_name = 'home/logout.html'
+
+class LoginInterfaceView(LoginView):
+    template_name = 'home/login.html'

@@ -32,6 +32,7 @@
 
         function populateTable(data) {
             const tableBody = document.getElementById('data-body');
+            data.sort((a, b) => (b['risk_rating'] || 0) - (a['risk_rating'] || 0));
 
             data.forEach(item => {
                 const row = document.createElement('tr');
