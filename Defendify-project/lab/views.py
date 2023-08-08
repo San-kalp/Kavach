@@ -12,9 +12,9 @@ import Cypher as c
 
 uri = "bolt://localhost:7687"
 user = "neo4j"
-password = "12345678"
+password = "rajat123"
 driver = GraphDatabase.driver(uri, auth=(user, password))
-session = driver.session(database="test")
+session = driver.session(database="neo4j")
 
 
 

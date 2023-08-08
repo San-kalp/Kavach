@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>QR Code Scanner</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/qrcode.css" />
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+  </head>
+
+  <body>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+          <div class="container">
+              <!-- Navbar brand or logo -->
+              <a href="#" class="logo">
+                <img
+                  src="/static/images/logo.png"
+                  width="30"
+                  height="42"
+                  alt="Cryptex logo"
+                />
+                Defendify
+              </a>
+  
+              <!-- Toggle button for responsive navigation -->
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+  
+              <!-- Navbar items -->
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-auto">
+                      <li class="nav-item">
+                          <a class="navbar-link" href="#">Home</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="navbar-link" href="#">About</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="navbar-link" href="wallet">Wallet</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="navbar-link" href="blogs">Blogs</a>
+                      </li>
+                      <li class="navbar-item">
+                        <a class="navbar-link" href="lab">Lab</a>
+                    </li>
+                    <li class="navbar-item">
+                      <a class="navbar-link" href="qrcode">QR</a>
+                  </li>
+                      <li class ="nav-item">
+                          <form method="post">
+                              {% csrf_token %}
+                              {{aform}}
+                              <!-- <input type="text" name="{{ aform.aform_data.name }}" placeholder="Address" maxlength="{{ aform.aform_data.field.max_length }}" class="form-control"> -->
+                              <button type="submit" class="btn btn-primary btn-block">Go</button>
+                          </form>
+                      </li>
+                      <li class="navbar-item">
+                        <a class="navbar-link" href="https://defendify-crypto-dashboard.vercel.app/">Dashboard</a>
+                    </li>
+                  </ul>
+                  <div id="google_translate_element"></div>
+              </div>
+          </div>
+      </nav>
+      <main>
+        <article>
+          <section>
+            <div id="qrpage">
+              <h1>QR Code Scanner</h1>
+        
+              <a id="btn-scan-qr">
+                <img src="https://st3.depositphotos.com/32114550/35583/v/450/depositphotos_355831362-stock-illustration-blue-code-scanning-vector-icon.jpg" alt="qr">
+              </a>
+        
+              <canvas hidden="" id="qr-canvas"></canvas>
+        
+              <div id="qr-result" hidden="">
+                <b>Data:</b> <span id="outputData"></span>
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+
+    
+
+    <script src="/static/js/qrCodeScanner.js"></script>
+  </body>
+</html>

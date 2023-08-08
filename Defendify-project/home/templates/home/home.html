@@ -24,9 +24,17 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
+        <div class="container">
             <!-- Navbar brand or logo -->
-            <a class="navbar-brand" href="#">Logo</a>
+            <a href="#" class="logo">
+              <img
+                src="/static/images/logo.png"
+                width="30"
+                height="42"
+                alt="Cryptex logo"
+              />
+              Defendify
+            </a>
 
             <!-- Toggle button for responsive navigation -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -38,20 +46,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="navbar-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="navbar-link" href="#">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="wallet">Wallet</a>
+                        <a class="navbar-link" href="wallet">Wallet</a>
                     </li>
-                    <li>
-                      <a class="navbar-link" href="blogs.html">Blogs</a>
+                    <li class="nav-item">
+                      <a class="navbar-link" href="blogs">Blogs</a>
                     </li>
                     <li class="navbar-item">
                       <a class="navbar-link" href="lab">Lab</a>
                   </li>
+                  <li class="navbar-item">
+                    <a class="navbar-link" href="qrcode">QR</a>
+                </li>
                     <li class ="nav-item">
                         <form method="post">
                             {% csrf_token %}
@@ -64,7 +75,7 @@
                       <a class="navbar-link" href="https://defendify-crypto-dashboard.vercel.app/">Dashboard</a>
                   </li>
                 </ul>
-                <div> id="google_translate_element"></div>
+                <div id="google_translate_element"></div>
             </div>
         </div>
     </nav>

@@ -144,5 +144,8 @@ def wallet_transactions(request, wallet):
     data = json.loads(requests.get(query).text)
     return render(request,"home/wallet_detail_transactions.html",{'response':data})
 
+def blogs(request):
+    return render(request, "home/blogs.html")
 
-
+def qrcode(request):
+     return render(request, "home/qrcode.html")
