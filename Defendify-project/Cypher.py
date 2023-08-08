@@ -370,4 +370,4 @@ def stream_embeddings_with_properties():
     RETURN gds.util.asNode(nodeId).index as name, gds.util.asNode(nodeId).risk_rating as exp, gds.util.asNode(nodeId).pageRank as pr, gds.util.asNode(nodeId).out_degree as outdeg, gds.util.asNode(nodeId).in_degree as indeg, gds.util.asNode(nodeId).total_amount as ta, gds.util.asNode(nodeId).time_stamp as ts, embedding as features"""
     handle(query)
 
-stream_embeddings_with_properties()
+

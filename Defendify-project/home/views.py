@@ -21,7 +21,6 @@ import re
 
 
 
-
 renderer = JSONRenderer()
 ETHERSCAN_API_KEY = "2SFM3DIEINQ9Z7B27U9V4C4ICHUHR25R9A"
 
