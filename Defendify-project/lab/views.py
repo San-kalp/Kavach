@@ -25,7 +25,7 @@ def home(request):
         if form.is_valid():
             input_data = form.cleaned_data['form_data']
             if input_data == '12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw':
-                 return redirect('wannacry')
+                 return redirect('create_graph_1')
             
                #     query = 'MATCH p=()-[r:PAYS]->() RETURN p LIMIT 25'
                #     result = session.run(query)
@@ -77,9 +77,10 @@ def create_graph_1(request):
      c.parse_tx()
      c.format_timestamp()
      c.format_tx()
-     query = 'MATCH p=()-[r:PAYS]->() RETURN p LIMIT 25'
+     query = 'MATCH p=()-[r:PAYS]->() RETURN p '
      result = session.run(query)
      data = result.data()
+     print (data)
      net = Network(height="500px", width="100%")
      for item in data:
           source_index = item['p'][0]['index']

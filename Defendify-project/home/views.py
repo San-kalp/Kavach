@@ -4,13 +4,12 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
-from .forms import searchForm, walletForm , addressForm
+from .forms import searchForm, walletForm , addressForm , regexForm
 from django.http import HttpResponseRedirect
 import requests
 import json
 import datetime
 import re
-
 
 
 
@@ -143,6 +142,26 @@ def wallet_transactions(request, wallet):
     query = f"http://www.walletexplorer.com/api/1/wallet?wallet={wallet}&from=0&count=100&caller=sankalp.chordia20@vit.edu"
     data = json.loads(requests.get(query).text)
     return render(request,"home/wallet_detail_transactions.html",{'response':data})
+
+def qr_code(request):
+    context = {'Data':'Hello world'}
+    return render(request,"home/qr-code.html",context = context)
+
+
+
+
+def handle_regex(request):
+    form = regexForm()
+    if request.method == 'POST':
+        form = regexForm(request.POST)
+        if form.is_valid():
+            regex = form.cleaned_data['regex']
+            print(regex)
+ 
+
+    return render(request , "home/regex.html")
+
+
 
 
 

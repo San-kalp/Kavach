@@ -14,3 +14,6 @@ class walletForm(forms.Form):
 class addressForm(forms.Form):
     address = forms.CharField(label="address",max_length=100)
 
+class regexForm(forms.Form):
+    regex = forms.CharField(label="regex",max_length=100)
+
