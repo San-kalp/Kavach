@@ -132,9 +132,9 @@
 
 <body>
     <div class="container">
-        <form class="form cf" method="POST">
+        <form class="form" method="POST">
             {% csrf_token %}
-            <input type="text" placeholder="Search the seed address">
+            {{form}}
             <button type="submit">Search</button>
         </form>
     </div>
