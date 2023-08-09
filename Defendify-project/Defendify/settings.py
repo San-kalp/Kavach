@@ -134,4 +134,5 @@ STATICFILES_DIRS = [
     BASE_DIR,"static",
 ]
 
-LOGIN_REDIRECT_URL = '/home/home'
+
+LOGIN_REDIRECT_URL = 'home'

@@ -14,3 +14,6 @@ class addressForm(forms.Form):
 class regexForm(forms.Form):
     regex = forms.CharField(label="regex",max_length=100)
 
+# class ethForm(forms.Form):
+#     eth = 
+

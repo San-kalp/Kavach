@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .forms import searchForm
 import json
 from neo4j import GraphDatabase
+import networkx as nx
 from pyvis.network import Network
 from django.conf import settings
 import pandas as pd
@@ -12,9 +13,9 @@ import Cypher as c
 
 uri = "bolt://localhost:7687"
 user = "neo4j"
-password = "rajat123"
+password = "12345678"
 driver = GraphDatabase.driver(uri, auth=(user, password))
-session = driver.session(database="neo4j")
+session = driver.session(database="test")
 
 
 
@@ -80,17 +81,34 @@ def create_graph_1(request):
      query = 'MATCH p=()-[r:PAYS]->() RETURN p '
      result = session.run(query)
      data = result.data()
-     print (data)
+     # G = nx.MultiDiGraph()
+     # # This is how the graph currently looks with pyvis
+     # # nt = Network('500px', '500px',directed=True)
+     # # nt.from_nx(G)
+     # # nt.show('nx.html')
+
      net = Network(height="500px", width="100%")
+     count=0
      for item in data:
+          if count==1:
+               print(item)
+          count+=1
           source_index = item['p'][0]['index']
           target_index = item['p'][2]['index']
+
+          # G.add_node(source_index, color="#00FF7F")
+          # G.add_node(target_index)
+          # G.add_edge(source_index, target_index, label='PAYS',arrows='to') 
                                    
           net.add_node(source_index, color="#00FF7F")
           net.add_node(target_index)
           net.add_edge(source_index, target_index, label='PAYS',arrows='to') 
-               #     net.barnes_hut()
+     # net.from_nx(G)
+     # net.show("example.html")
+     # net.show_buttons()
+     # net.show_buttons()
      net.save_graph(str(settings.BASE_DIR)+'/lab/templates/pvis_graph_file.html')
+     
      number_of_nodes = c.count()[0]['COUNT(n)']
      c.refresh_graph()
      number_of_relationships = c.create_graph_catalogue()[0]['relationshipCount']
@@ -140,6 +158,7 @@ def SageMaker(request):
      c.test_different_hp_graph_sage()
      data = c.FastRP()
      context = {'data':data}
+     print(data)
      
      return render(request,'lab/wannacry/sagemaker.html',context=context)
 

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import fraudlent_data_tag
+
+admin.site.register(fraudlent_data_tag)

@@ -5,7 +5,7 @@ from django.urls import path
 
 urlpatterns = [
     
-    path("",views.home,name="home"),
+    path("",views.home,name="homee"),
     path("show_data1",views.show_data1,name="show_data1"),
     path("/12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw/",views.wannacry_function,name="wannacry"),
     path("/12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw/create-graph",views.create_graph_1,name="create_graph_1"),
