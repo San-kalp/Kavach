@@ -154,18 +154,3 @@ def blogs(request):
 
 def qrcode(request):
      return render(request, "home/qrcode.html")
-
-class AuthorisedView(LoginRequiredMixin , TemplateView):
-    template_name='home/authorize.html'
-    login_url ='/admin'
-
-class SignupView(CreateView):
-    form_class = UserCreationForm
-    template_name = 'home/register.html'
-    success_url="/home/home.html"
-
-class LogoutInterfaceView(LogoutView):
-    template_name = 'home/logout.html'
-
-class LoginInterfaceView(LoginView):
-    template_name = 'home/login.html'
