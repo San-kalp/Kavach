@@ -1,4 +1,6 @@
 venv/
 Defendify-project/Defendify/__pycache__
 Defendify-project/Defendify/__init__.py
-**/__pycache__/
+Defendify-project/lab/__pycache__
+Defendify-project/home/__pycache__
+Defendify-project/__pycache__
