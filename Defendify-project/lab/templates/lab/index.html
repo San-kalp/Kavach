@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <style>
+        
         *,*:after,*:before {
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
         }
 
-        .cf:before,
-        .cf:after {
+        .cf:before,.cf:after {
             content: "";
             display: table;
         }
@@ -34,18 +34,21 @@
         }
 
         .container {
-            display: flex;
+            display:inline;
+            flex-direction: row;
             align-items: center;
+            top: 0;
         }
 
         .form {
             background: #f4f4f4;
             background: rgba(244, 244, 244, 0);
             left: 50%;
+            display:inline;
             padding: 2px 5px;
             position: absolute;
             margin: -22px 0 0 -170px;
-            top: 50%;
+            top: 5%;
             width: 339px;
             box-shadow: 0 4px 9px rgba(0, 0, 0, .37);
             -moz-box-shadow: 0 4px 9px rgba(0, 0, 0, .37);
@@ -55,8 +58,7 @@
             -webkit-border-radius: 10px
         }
 
-        .form input,
-        .form button {
+        .form input,.form button {
             float: left
         }
 
@@ -127,20 +129,206 @@
         .form button:hover {
             opacity: .9;
         }
+
+        .hero {
+  padding-block: 150px 140px;
+}
+
+.hero-text {
+  font-size: var(--fs-5);
+  margin-block: 25px 40px;
+}
+
+.hero-banner {
+  max-width: max-content;
+  margin-inline: auto;
+}
+
+.hero-content {
+  margin-block-end: 80px;
+}
+
+.hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .hero-content {
+    margin-block-end: 0;
+  }
+
+  .section {
+  padding-block: var(--section-padding);
+}
+.start-cont {
+  padding: 2vw;
+}
+
+.h1,
+.h2,
+.h3 {
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.h1 {
+  font-size: var(--fs-1);
+}
+
+.section-text {
+  font-size: var(--fs-5);
+  margin-block: 15px 35px;
+}
+
+.section-list {
+  margin-block-end: 35px;
+}
+
+.section-item:not(:last-child) {
+  margin-block-end: 25px;
+}
+
+.section-item .title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-block-end: 15px;
+}
+
+.section-item .title-wrapper ion-icon {
+  flex-shrink: 0;
+  color: var(--blue-crayola);
+  font-size: 24px;
+}
+.logo {
+  color: var(--white);
+  font-size: 2.5rem;
+  font-weight: var(--fw-700);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-toggle-btn .line {
+  width: 26px;
+  height: 3px;
+  background-color: var(--white);
+  transition: var(--transition-1);
+}
+
+.nav-toggle-btn .line:not(:last-child) {
+  margin-block-end: 4px;
+}
+
+.nav-toggle-btn {
+  padding: 8px 5px;
+  margin-inline-start: auto;
+}
+
+.nav-toggle-btn.active .line-1 {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.nav-toggle-btn.active .line-2 {
+  opacity: 0;
+}
+
+.nav-toggle-btn.active .line-3 {
+  transform: rotate(-45deg) translate(4px, -5px);
+}
+
+.navbar {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--eerie-black-1);
+  max-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: 0.25s var(--cubic-out);
+}
+
+.navbar.active {
+  max-height: calc(100vh - 63px);
+  visibility: visible;
+  transition-duration: 0.5s;
+}
+
+.navbar-item:not(:last-child) {
+  border-block-end: 1px solid var(--white_30);
+}
+
+.navbar-link {
+  color: var(--white);
+  font-weight: var(--fw-700);
+  padding: 12px 30px;
+  transition: var(--transition-1);
+}
+
+.navbar-link:is(:hover, :focus, .active) {
+  color: var(--blue-crayola);
+}
+.navContainer {
+  max-width: 100% !important;
+}
+
+.ctr {
+    max-width: 960px;
+  }
     </style>
 </head>
 
 <body>
+     
     <div class="container">
-        <form class="form" method="POST">
+        
+        <form class="form cf" method="POST">
+            <div id="text">
+                <b>Insert any public address</b>
+            </div>
             {% csrf_token %}
             {{form}}
             <button type="submit">Search</button>
         </form>
-        <div class="text">
-            <p>Insert a public address.</p>
-        </div>
     </div>
+  </br>
+  </br>
+    <main>
+        <article>
+          <section class="section hero" aria-label="hero" data-section>
+            <div class="start-cont">
+              <div class="hero-content">
+                <h1 class="h1 hero-title" style="font-size:40px !important">
+                  To find & validate pattern of any 🪙 crypto address 
+                </h1>
+  
+                <p class="hero-text"style="font-size:20px !important">
+                  One click solution ✅
+                </p>
+              </div>
+  
+              <figure class="hero-banner">
+                <img
+                  src="/static/images/wallet.png"
+                  width="570"
+                  height="448"
+                  alt="hero banner"
+                  class="w-100"
+                />
+              </figure>
+            </div>
+  
+            <script
+              type="text/javascript"
+              src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            ></script>
+          </section>
+        </article>
+      </main>
 </body>
 
 </html>

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Table</title>
+    <title>Result</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Data Table</h2>
+        <h2>Here are your results : </h2>
         <table class="table">
             <thead>
                 <tr>
@@ -55,6 +55,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         // Find the maximum exposure value
         let maxExp = -Infinity;
+        let minExp = Infinity;
         let maxExpCell = null;
         const expCells = document.querySelectorAll(".exp");
         expCells.forEach(cell => {
@@ -63,18 +64,44 @@
                 maxExp = expValue;
                 maxExpCell = cell;
             }
+            if (expValue < minExp) {
+                minExp = expValue;
+            }
         });
 
+        // Define thresholds for High, Medium, and Low
+        let highThreshold = maxExp;
+        let lowThreshold = minExp;
+        let mediumThreshold = (highThreshold + lowThreshold) / 2;
+
         // Highlight cell with the highest exposure value and add warning sign icon
+        // Also, color and label each cell as "High", "Medium", and "Low" according to their expValue
         expCells.forEach(cell => {
             const expValue = parseFloat(cell.textContent);
             if (expValue === maxExp) {
                 cell.classList.add("highlight");
                 cell.innerHTML = `${cell.innerHTML} <i class="fas fa-exclamation-circle text-warning"></i>`;
             }
+            if (expValue >= mediumThreshold) {
+                cell.style.backgroundColor = 'red'; // color for High
+                cell.innerHTML = `${cell.innerHTML} High`;
+            } else if (expValue < mediumThreshold && expValue > lowThreshold) {
+                cell.style.backgroundColor = 'yellow'; // color for Medium
+                cell.innerHTML = `${cell.innerHTML} Medium`;
+            } else {
+                cell.style.backgroundColor = 'green'; // color for Low
+                cell.innerHTML = `${cell.innerHTML} Low`;
+            }
         });
     });
 </script>
+
+
+
+
+<a href="{% url 'ml' %}" class="btn btn-primary">Run ML</a>
+
+
 
 </body>
 </html>

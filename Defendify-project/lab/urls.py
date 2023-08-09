@@ -15,6 +15,7 @@ urlpatterns = [
     path("risk-rating-tx",views.risk_rating_tx,name="risk_rating_tx"),
     path("risk-rating-address",views.risk_rating_address,name="risk_rating_address"),
     path("sagemaker",views.SageMaker,name='SageMaker'),
+    path("ml",views.run_ml_file,name="ml")
 
 
    

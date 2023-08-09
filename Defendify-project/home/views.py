@@ -4,7 +4,15 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
-from .forms import searchForm, walletForm , addressForm , regexForm
+from .forms import searchForm, walletForm , addressForm
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import TemplateView
+from django.views.generic import CreateView #For signing up new user
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView , LogoutView
+from django.contrib.auth.forms import UserCreationForm
+from .forms import searchForm, walletForm , addressForm , regexForm 
 from django.http import HttpResponseRedirect
 import requests
 import json
