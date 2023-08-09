@@ -2,9 +2,9 @@ from neo4j import GraphDatabase
 
 uri = "bolt://localhost:7687"
 user = "neo4j"
-password = "rajat123"
+password = "12345678"
 driver = GraphDatabase.driver(uri, auth=(user, password))
-session = driver.session(database="neo4j")
+session = driver.session(database="test")
 
 def handle(query):
     result = session.run(query)

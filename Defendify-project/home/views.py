@@ -19,29 +19,26 @@ renderer = JSONRenderer()
 ETHERSCAN_API_KEY = "2SFM3DIEINQ9Z7B27U9V4C4ICHUHR25R9A"
 
 regex_patterns = [
-        (r'^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$','Bitcoin Bech 32 Address', range(25,35)), #Have to resolve the issue
-        (r'^1[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin Legacy (P2PKH) Address', range(25, 35)),
-        (r'^1\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin Legacy (P2PKH) Address with Null Bytes', range(25, 35)),
-        (r'^3[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin P2SH Address', range(25, 35)),
-        (r'^3\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin P2SH Address with Null Bytes', range(25, 35)),
-        (r'^6P[a-km-zA-HJ-NP-Z1-9]{56}$', 'Bitcoin Private Key (WIF) Compressed', range(56, 57)),
-        (r'^6\x00P\x00([a-km-zA-HJ-NP-Z1-9]\x00){56}$', 'Bitcoin Private Key (WIF) Compressed with Null Bytes', range(56, 57)),
-        (r'^5[a-km-zA-HJ-NP-Z1-9]{50}$', 'Bitcoin Private Key (WIF) Uncompressed', range(50, 51)),
-        (r'^5\x00([a-km-zA-HJ-NP-Z1-9]\x00){50}$', 'Bitcoin Private Key (WIF) Uncompressed with Null Bytes', range(50, 51)),
-        (r'^[KL][a-km-zA-HJ-NP-Z1-9]{51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub)', range(51, 52)),
-        (r'^[KL]\x00([a-km-zA-HJ-NP-Z1-9]\x00){51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub) with Null Bytes', range(51, 52)),
-        (r'^xprv[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Private Key (xprv)', range(107, 109)),
-        # (r'^x\x00p\x00r\x00v\x00([a-km-zA-HJ-NP-Z1-9]\x00){107,108}$', 'Bitcoin BIP-32 Extended Private Key (xprv) with Null Bytes', range(107, 109)),
-        (r'^xpub[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Public Key (xpub)', range(107, 109)),
-        # (r'^x\x00p\x00u\x00b\x00([a-km-zA-HJ-NP-Z1-9]\x00){107,108}$', 'Bitcoin BIP-32 Extended Public Key (xpub) with Null Bytes', range(107, 109))
-
-        (r'^X[a-km-zA-HJ-NP-Z1-9]{33}$', 'Dash', range(33, 34)),
-        (r'^D[5-9A-HJ-NP-U][1-9A-HJ-NP-Za-km-z]{32}$', 'Doge', range(34, 35)),
-        (r'^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$', 'Litecoin', range(26, 34)),
-        (r'^r[0-9a-zA-Z]{24,34}$', 'Ripple', range(24, 35)),
-        (r'^[48][0-9AB][1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 1', range(95, 96)),
-        (r'^[48][0-9AB]|4[1-9A-HJ-NP-Za-km-z]{12}(?:[1-9A-HJ-NP-Za-km-z]{30})?[1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 2', range(95, 96)),
-        (r'^0x[a-fA-F0-9]{40}$', 'Ethereum', range(42, 43))
+        (r'^(bc1)[a-zA-HJ-NP-Z0-9]{25,39}$','Bitcoin Bech 32 Address', range(25,35),'Bitcoin'), #Have to resolve the issue
+        (r'^1[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin Legacy (P2PKH) Address', range(25, 35),'Bitcoin'),
+        (r'^1\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin Legacy (P2PKH) Address with Null Bytes', range(25, 35),'Bitcoin'),
+        (r'^3[a-km-zA-HJ-NP-Z1-9]{25,34}$', 'Bitcoin P2SH Address', range(25, 35),'Bitcoin'),
+        (r'^3\x00([a-km-zA-HJ-NP-Z1-9]\x00){25,34}$', 'Bitcoin P2SH Address with Null Bytes', range(25, 35),'Bitcoin'),
+        (r'^6P[a-km-zA-HJ-NP-Z1-9]{56}$', 'Bitcoin Private Key (WIF) Compressed', range(56, 57),'Bitcoin'),
+        (r'^6\x00P\x00([a-km-zA-HJ-NP-Z1-9]\x00){56}$', 'Bitcoin Private Key (WIF) Compressed with Null Bytes', range(56, 57),'Bitcoin'),
+        (r'^5[a-km-zA-HJ-NP-Z1-9]{50}$', 'Bitcoin Private Key (WIF) Uncompressed', range(50, 51),'Bitcoin'),
+        (r'^5\x00([a-km-zA-HJ-NP-Z1-9]\x00){50}$', 'Bitcoin Private Key (WIF) Uncompressed with Null Bytes', range(50, 51),'Bitcoin'),
+        (r'^[KL][a-km-zA-HJ-NP-Z1-9]{51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub)', range(51, 52),'Bitcoin'),
+        (r'^[KL]\x00([a-km-zA-HJ-NP-Z1-9]\x00){51}$', 'Bitcoin Extended Private Key (xprv) or Extended Public Key (xpub) with Null Bytes', range(51, 52),'Bitcoin'),
+        (r'^xprv[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Private Key (xprv)', range(107, 109),'Bitcoin'),
+        (r'^xpub[a-km-zA-HJ-NP-Z1-9]{107,108}$', 'Bitcoin BIP-32 Extended Public Key (xpub)', range(107, 109),'Bitcoin'),
+        (r'^X[a-km-zA-HJ-NP-Z1-9]{33}$', 'Dash', range(33, 34),'Dash'),
+        (r'^D[5-9A-HJ-NP-U][1-9A-HJ-NP-Za-km-z]{32}$', 'Doge', range(34, 35),'Doge'),
+        (r'^(L|M|3)[a-km-zA-HJ-NP-Z1-9]{26,33}$', 'Litecoin', range(26, 34),'Litecoin'),
+        (r'^r[0-9a-zA-Z]{24,34}$', 'Ripple', range(24, 35),'Ripple'),
+        (r'^[48][0-9AB][1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 1', range(95, 96),'Monero'),
+        (r'^[48][0-9AB]|4[1-9A-HJ-NP-Za-km-z]{12}(?:[1-9A-HJ-NP-Za-km-z]{30})?[1-9A-HJ-NP-Za-km-z]{93}$', 'Monero Pattern 2', range(95, 96),'Monero'),
+        (r'^0x[a-fA-F0-9]{40}$', 'Ethereum', range(42, 43),'Ethereum')
     ]
 
 
@@ -148,3 +145,23 @@ def blogs(request):
 
 def qrcode(request):
      return render(request, "home/qrcode.html")
+
+def regex(request):
+    desc=""
+    cryptocurrency=""
+    form = regexForm()
+    if request.method == 'POST':
+        form = regexForm(request.POST)
+        if form.is_valid():
+            input_data = form.cleaned_data['regex']
+            for regex, description, length_range , crypto in regex_patterns:
+                if re.match(regex, input_data):
+                    matched_length = len(input_data)
+                    if matched_length in length_range:
+                        desc = description
+                        cryptocurrency = crypto
+                        break
+    context = {'form':form,'desc':desc,'cryptocurrency':cryptocurrency}
+    return render(request, "home/regex.html",context=context)
+
+    

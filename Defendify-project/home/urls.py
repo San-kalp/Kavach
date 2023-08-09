@@ -9,5 +9,7 @@ urlpatterns = [
     path("wallet/<str:wallet>", views.wallet_detail, name ="wallet-detail"),
     path("wallet/<str:wallet>/transactions",views.wallet_transactions,name ="wallet_transactions"),
     path("blogs/",views.blogs, name="blogs"),
-    path("qrcode/",views.qrcode, name="qrcode")
+    path("qrcode/",views.qrcode, name="qrcode"),
+    path("regex",views.regex,name = "regex"),
+    
 ]
