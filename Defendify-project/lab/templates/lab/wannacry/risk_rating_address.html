@@ -29,18 +29,38 @@
     <!-- Inline JavaScript to populate the data and download JSON -->
     <script>
         const data = JSON.parse('{{ data |escapejs }}');
+        const maxRiskRating = Number.MIN_VALUE;
+        // let maxRiskObject = null;
 
         function populateTable(data) {
             const tableBody = document.getElementById('data-body');
+            const arr = [];
+            const maxBoolean = false;
+
+            data.forEach(item => {
+                arr.push(item.risk_rating);
+            });
+            arr.sort();
+            arr.reverse();
+            console.log("Object with maximum risk_rating:", arr[0]);
+                // if(arr[0]){this.maxBoolean = true;}
 
             data.forEach(item => {
                 const row = document.createElement('tr');
+                const riskRating = item['risk_rating'];
+                if(arr[0] == this.riskRating){
+                    this.maxBoolean = true;
+                }
                 row.innerHTML = `
                     <td>${item['q.index']}</td>
                     <td>${item['risk_rating'] !== null ? item['risk_rating'] : 'N/A'}</td>
                 `;
                 tableBody.appendChild(row);
             });
+
+            
+            
+            
         }
 
         // Call the function to populate the table

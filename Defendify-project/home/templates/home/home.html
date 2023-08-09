@@ -54,23 +54,15 @@
                     <li class="nav-item">
                         <a class="navbar-link" href="wallet">Wallet</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                       <a class="navbar-link" href="blogs">Blogs</a>
-                    </li>
+                    </li> -->
                     <li class="navbar-item">
                       <a class="navbar-link" href="lab">Lab</a>
                   </li>
                   <li class="navbar-item">
                     <a class="navbar-link" href="qrcode">QR</a>
                 </li>
-                    <li class ="nav-item">
-                        <form method="post">
-                            {% csrf_token %}
-                            {{aform}}
-                            <!-- <input type="text" name="{{ aform.aform_data.name }}" placeholder="Address" maxlength="{{ aform.aform_data.field.max_length }}" class="form-control"> -->
-                            <button type="submit" class="btn btn-primary btn-block">Go</button>
-                        </form>
-                    </li>
                     <li class="navbar-item">
                       <a class="navbar-link" href="https://defendify-crypto-dashboard.vercel.app/">Dashboard</a>
                   </li>

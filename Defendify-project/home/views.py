@@ -4,12 +4,44 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
-from .forms import searchForm, walletForm , addressForm , regexForm
+from .forms import searchForm, walletForm , addressForm , regexForm 
 from django.http import HttpResponseRedirect
 import requests
 import json
 import datetime
 import re
+
+
+from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
+from django.views.generic import CreateView #For signing up new user
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import LoginView , LogoutView
+from django.contrib.auth.forms import UserCreationForm
+
+class SignupView(CreateView):
+    form_class = UserCreationForm
+    template_name = 'home/sign-up.html'
+    success_url="h"
+
+class LogoutInterfaceView(LogoutView):
+    template_name = 'home/logout.html'
+
+class LoginInterfaceView(LoginView):
+    template_name = 'home/login.html'
+    success_url="h"
+
+
+class lp(TemplateView):
+    template_name = 'home/welcome.html'
+    extra_context = {'today':datetime.today()}
+  
+
+class AuthorisedView(LoginRequiredMixin , TemplateView):
+    template_name='home/authorize.html'
+    login_url ='/admin'
+
 
 
 
@@ -100,6 +132,8 @@ def home (request):
             for pattern, pattern_name, length_range in regex_patterns:
                  if re.match(pattern, address) and len(address) in length_range:
                      print(pattern, "\t" , pattern_name)
+
+        
 
 
                         
