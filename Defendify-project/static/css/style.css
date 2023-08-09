@@ -273,6 +273,8 @@
   animation: fadeIn 2s forwards; /* Slowed down the animation to 2 seconds */
 }
 
+
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
