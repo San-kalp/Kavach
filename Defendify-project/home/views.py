@@ -18,7 +18,8 @@ import requests
 import json
 import datetime
 import re
-
+from .cryptowallet_risk_scoring.riskreport.client import *
+from .cryptowallet_risk_scoring.riskreport.types import *
 
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -107,10 +108,38 @@ def home (request):
                     context = [address_,amountReceived,amountSent,balance,number_of_transactions,transaction,unspent, data, wallet_id["wallet_id"]]
                     return render(request,"home/addressInfo.html",{'response':context})
                 elif re.match(r"^0x[a-fA-F0-9]{40}$",input_data):
-                    url = f"https://api.etherscan.io/api?module=account&action=balance&address={input_data}&tag=latest&apikey={ETHERSCAN_API_KEY}"
-                    response = requests.get(url)
-                    data = json.loads(response.text)
-                    print(data)
+                    string = '{\"eth_addresses\":[\"'+input_data+'\"]}'
+                    s1 = json.dumps(string)
+                    data = json.loads(s1)
+                    report = riskreport_on_entity(**json.loads(data))
+                    combined_risk = report.risk_scores.combined_risk
+                    reputation_risk = report.risk_scores.reputation_risk
+
+                    # reasons = report.reasons
+                    # badneighbors=0
+                    # for reason in reasons[1:]:
+                    #     print(type(reason.risk_elaboration))
+                    #     if(reason.risk_elaboration):
+                    #         badneighbors+=reason.get('riskElaboration').get("howManyBadRecipients")
+
+                    # print("jdijsisijs .......................................", badneighbors)
+                    
+                    # print(json.dumps(report.as_json()))
+                    # print(report)
+                    with open('risk_node_data.json', 'w', encoding='utf-8') as f:
+                        json.dump(report.as_json(), f, ensure_ascii=False, indent=4)
+                    
+                    node_color = 0
+                    if(combined_risk<=35):
+                        node_color = 0
+                    elif (combined_risk>35 and combined_risk<60):
+                        node_color = 1
+                    else:
+                        node_color = 2
+                    context = [input_data, report.risk_scores.combined_risk, report.risk_scores.reputation_risk, report.risk_scores.fraud_risk, report.risk_scores.lending_risk, node_color]
+                    # print(context)
+
+                    return render(request,"home/riskscore.html",{'response':context})
                 else :
                     context = get_tx_data(input_data)
                     return render(request,"home/transactionInfo.html",{'response':context})
@@ -206,4 +235,4 @@ def regex(request):
     context = {'form':form,'desc':desc,'cryptocurrency':cryptocurrency}
     return render(request, "home/regex.html",context=context)
 
-    
+

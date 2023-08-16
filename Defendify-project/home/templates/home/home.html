@@ -22,7 +22,7 @@
     <!--scritps-->
     <script src="/static/js/script.js" defer></script>
 
-    Navbar
+
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <div class="container">
             <!-- Navbar brand or logo -->
@@ -70,6 +70,8 @@
                   <li class="navbar-item">
                     <a class="navbar-link" href="regex">Regex</a>
                 </li>
+
+                <li><a class="btn btn-primary" style="margin-top: 10px;" href="{% url 'logout' %}">Logout</a></li>
                   
                 </ul>
                 <div id="google_translate_element"></div>
@@ -87,8 +89,7 @@
               </h1>
 
               <p class="hero-text">
-                One tool for all kinds of crypto investigation, scanning of
-                fraudlant IP addresses
+                One tool for all crypto investigations.
               </p>
               <div class="container address_search">
                 <div id="projectName">Defendify.</div>

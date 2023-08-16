@@ -11,8 +11,10 @@ import Cypher as c
 import subprocess
 from django.http import HttpResponse
 import pandas as pd
-
+import csv
 import sklearn 
+
+import os
 #as scikit_learn
 import scipy
 import altair as alt
@@ -100,25 +102,28 @@ def create_graph_1(request):
     # # nt.show('nx.html')
 
     net = Network(height="500px", width="100%")
+    # net.barnes_hut()
     count = 0
     for item in data:
-        if count == 1:
-            print(item)
-        count += 1
+
         source_index = item['p'][0]['index']
         target_index = item['p'][2]['index']
 
         # G.add_node(source_index, color="#00FF7F")
         # G.add_node(target_index)
         # G.add_edge(source_index, target_index, label='PAYS',arrows='to')
-
-        net.add_node(source_index, color="#00FF7F")
+        if source_index == "12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw":
+            net.add_node(source_index,color='red')
+        else :
+            net.add_node(source_index, color="#00FF7F")
         net.add_node(target_index)
         net.add_edge(source_index, target_index, label='PAYS', arrows='to')
     # net.from_nx(G)
     # net.show("example.html")
     # net.show_buttons()
     # net.show_buttons()
+    # net.nodes['12t9YDPgwueZ9NyMgw519p7AA8isjr6SMw']['color'] = "#FF0000"
+
     net.save_graph(str(settings.BASE_DIR) +
                    '/lab/templates/pvis_graph_file.html')
 
@@ -126,6 +131,7 @@ def create_graph_1(request):
     c.refresh_graph()
     number_of_relationships = c.create_graph_catalogue()[
         0]['relationshipCount']
+    
 
     context = {'n': number_of_nodes, 'r': number_of_relationships}
     return render(request, "lab/wannacry/wannacry2.html", context=context)
@@ -199,7 +205,26 @@ def SageMaker(request):
 
 
 def run_ml_file(request):
-    return HttpResponse("Hello")
+        csv_file_path = os.path.join(settings.BASE_DIR, 'lab', '20210313b_GraphSAGE_embed_features_output_predictor_3.csv')
+        
+        csv_data = []
+        
+        with open(csv_file_path, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                csv_data.append(row)
+        
+        data = json.dumps(csv_data)
+        
+        print(data)
+
+        context = [data]
+        
+        
+       
+    
+        return render(request,"lab/wannacry/ml-csv.html",{'response':context})
+    
 
     # fileName = '20210313b_GraphSAGE_embed_features'
 

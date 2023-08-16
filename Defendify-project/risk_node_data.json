@@ -1,0 +1,34 @@
+{
+    "reasons": [
+        {
+            "explanation": "The entity has been associated with multiple dates between 2018-01-11 and 2022-07-24",
+            "label": "date-verification",
+            "offsets": {
+                "combined_risk_offset": -2.3415947,
+                "fraud_risk_offset": -2.6701565,
+                "lending_risk_offset": 0.0,
+                "reputation_risk_offset": -1.6551476
+            },
+            "risk_elaboration": {
+                "verified_dates": [
+                    {
+                        "date": "2018-01-11",
+                        "source": "The day '0xa9c0da0da5cdb7947fa124b14beb1af63e75b6af' was first seen on the blockchain.",
+                        "weight": 0.6003
+                    },
+                    {
+                        "date": "2022-07-24",
+                        "source": "The day '0xa9c0da0da5cdb7947fa124b14beb1af63e75b6af' was last seen on the blockchain.",
+                        "weight": 0.1038
+                    }
+                ]
+            }
+        }
+    ],
+    "risk_scores": {
+        "combined_risk": 27.658405,
+        "fraud_risk": 27.329844,
+        "lending_risk": 30.0,
+        "reputation_risk": 28.344852
+    }
+}
